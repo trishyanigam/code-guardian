@@ -1,5 +1,2 @@
-/**
- * Models directory barrel export
- * Database schemas and models will be registered here.
- */
-export {};
+export { User } from './user.model.js';
+export { Repository } from './repository.model.js';

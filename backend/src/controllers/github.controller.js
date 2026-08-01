@@ -1,8 +1,10 @@
 import passport from 'passport';
+import jwt from 'jsonwebtoken';
 import * as githubService from '../services/github.service.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { ApiError } from '../utils/ApiError.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import config from '../config/env.config.js';
 
 /**
  * Helper function to extract GitHub Access Token from request headers or query
@@ -44,16 +46,34 @@ export const callback = (req, res, next) => {
       return next(new ApiError(401, 'GitHub authentication failed'));
     }
 
-    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    // Sign JWT token for the authenticated OAuth user
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role },
+      config.jwt.secret,
+      { expiresIn: config.jwt.expiresIn }
+    );
 
-    // Redirect to frontend dashboard or return structured JSON response
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    };
+
+    const sanitizedUser = user.toObject ? user.toObject() : { ...user };
+    delete sanitizedUser.password;
+
+    // Redirect to frontend dashboard with token or return JSON response
     if (req.accepts('html')) {
-      return res.redirect(`${clientUrl}/dashboard`);
+      return res
+        .cookie('token', token, cookieOptions)
+        .redirect(`${config.clientUrl}/dashboard?token=${token}`);
     }
 
     return res
       .status(200)
-      .json(new ApiResponse(200, { user }, 'GitHub authentication successful'));
+      .cookie('token', token, cookieOptions)
+      .json(new ApiResponse(200, { user: sanitizedUser, token }, 'GitHub authentication successful'));
   })(req, res, next);
 };
 

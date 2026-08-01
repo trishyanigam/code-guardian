@@ -1,5 +1,2 @@
-/**
- * Services directory barrel export
- * Business logic and external service integrations will be exported here.
- */
-export {};
+export * as authService from './auth.service.js';
+export * as githubService from './github.service.js';

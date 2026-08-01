@@ -2,10 +2,11 @@ import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import crypto from 'crypto';
 import { User } from '../models/user.model.js';
+import config from './env.config.js';
 
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || 'your_github_client_id';
-const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || 'your_github_client_secret';
-const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL || 'http://localhost:5000/api/v1/auth/github/callback';
+const GITHUB_CLIENT_ID = config.github.clientId || 'your_github_client_id';
+const GITHUB_CLIENT_SECRET = config.github.clientSecret || 'your_github_client_secret';
+const GITHUB_CALLBACK_URL = config.github.callbackUrl || 'http://localhost:5000/api/v1/github/callback';
 
 /**
  * Configure GitHub Passport Strategy
@@ -16,7 +17,7 @@ passport.use(
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
       callbackURL: GITHUB_CALLBACK_URL,
-      scope: ['user:email'],
+      scope: ['user:email', 'repo'],
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -40,6 +41,8 @@ passport.use(
           });
         }
 
+        // Attach access token to user object for downstream service operations
+        user.githubAccessToken = accessToken;
         return done(null, user);
       } catch (error) {
         return done(error, null);
