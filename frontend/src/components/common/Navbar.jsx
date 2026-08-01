@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiShield, FiMenu, FiX, FiGithub, FiArrowRight, FiSearch } from 'react-icons/fi';
-import { NAV_LINKS, APP_NAME } from '../../utils/constants';
+import { NAV_LINKS } from '../../utils/constants';
 import { useScroll } from '../../hooks/useScroll';
 import { Button } from './Button';
 
@@ -71,10 +71,20 @@ export const Navbar = () => {
               <span>★ 4.8k</span>
             </a>
 
-            {/* CTA Button */}
-            <Button variant="primary" size="sm" icon={FiArrowRight} href="#ai-review">
-              Get Started
-            </Button>
+            {/* Login Button */}
+            <Link
+              to="/login"
+              className="text-xs font-semibold text-gray-300 hover:text-white px-3 py-2 transition-colors"
+            >
+              Login
+            </Link>
+
+            {/* Get Started Button -> /signup */}
+            <Link to="/signup">
+              <Button variant="primary" size="sm" icon={FiArrowRight}>
+                Get Started
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -104,19 +114,28 @@ export const Navbar = () => {
             </a>
           ))}
           <div className="pt-4 border-t border-gray-800 space-y-3">
-            <Button
-              variant="primary"
-              size="md"
-              className="w-full justify-center"
-              icon={FiArrowRight}
-              href="#ai-review"
+            <Link
+              to="/login"
               onClick={() => setMobileMenuOpen(false)}
+              className="block text-center py-2.5 text-sm font-semibold text-gray-300 hover:text-white bg-gray-900/80 rounded-xl border border-gray-800"
             >
-              Get Started
-            </Button>
+              Login
+            </Link>
+            <Link to="/signup" onClick={() => setMobileMenuOpen(false)}>
+              <Button
+                variant="primary"
+                size="md"
+                className="w-full justify-center"
+                icon={FiArrowRight}
+              >
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       )}
     </header>
   );
 };
+
+export default Navbar;

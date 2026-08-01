@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FiShield, FiZap, FiArrowRight, FiCheck, FiTerminal, FiGitPullRequest, FiLock } from 'react-icons/fi';
 import { Button } from '../common/Button';
 
@@ -38,9 +39,11 @@ export const Hero = () => {
 
           {/* Primary & Secondary Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button variant="gradient" size="lg" icon={FiArrowRight} href="#ai-review">
-              Start Free Security Audit
-            </Button>
+            <Link to="/signup">
+              <Button variant="gradient" size="lg" icon={FiArrowRight}>
+                Start Free Security Audit
+              </Button>
+            </Link>
             <Button variant="secondary" size="lg" icon={FiTerminal} href="#features">
               Explore Features
             </Button>
@@ -130,3 +133,5 @@ export const Hero = () => {
     </section>
   );
 };
+
+export default Hero;

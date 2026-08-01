@@ -33,12 +33,17 @@ export const LoginForm = ({ onSubmit }) => {
     }, 1000);
   };
 
+  const handleGithubLogin = () => {
+    window.location.href = 'http://localhost:5000/api/v1/github/login';
+  };
+
   return (
     <div className="w-full space-y-6">
       {/* Social Login Options (Clerk / Vercel / Linear Style) */}
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
+          onClick={handleGithubLogin}
           className="flex items-center justify-center gap-2 rounded-xl bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-gray-200 border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-200 cursor-pointer group"
         >
           <FaGithub className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />

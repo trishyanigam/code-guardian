@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FiArrowRight, FiShield, FiGithub, FiCheck } from 'react-icons/fi';
 import { Button } from '../common/Button';
 
@@ -30,12 +31,16 @@ export const CtaSection = () => {
 
             {/* CTAs */}
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button variant="gradient" size="lg" icon={FiGithub} href="#ai-review">
-                Authorize GitHub App
-              </Button>
-              <Button variant="secondary" size="lg" icon={FiArrowRight} href="#ai-review">
-                Request Enterprise Demo
-              </Button>
+              <Link to="/signup">
+                <Button variant="gradient" size="lg" icon={FiGithub}>
+                  Authorize GitHub App
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button variant="secondary" size="lg" icon={FiArrowRight}>
+                  Get Started Free
+                </Button>
+              </Link>
             </div>
 
             {/* Certification Badges */}
@@ -62,3 +67,5 @@ export const CtaSection = () => {
     </section>
   );
 };
+
+export default CtaSection;
