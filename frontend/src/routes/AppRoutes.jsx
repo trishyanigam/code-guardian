@@ -4,6 +4,7 @@ import MainLayout from '../layouts/MainLayout';
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
 import SignupPage from '../pages/SignupPage';
+import ConnectRepositoryPage from '../pages/ConnectRepositoryPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 export const AppRoutes = () => {
@@ -14,6 +15,7 @@ export const AppRoutes = () => {
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/repositories/connect" element={<ConnectRepositoryPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
