@@ -2,6 +2,7 @@ import { Router } from 'express';
 import healthRoutes from './health.routes.js';
 import authRoutes from './auth.routes.js';
 import githubRoutes from './github.routes.js';
+import repositoryRoutes from './repository.routes.js';
 
 const router = Router();
 
@@ -13,5 +14,8 @@ router.use('/auth', authRoutes);
 
 // Mount github routes under /github
 router.use('/github', githubRoutes);
+
+// Mount repository routes under /repositories
+router.use('/repositories', repositoryRoutes);
 
 export default router;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { FiGitBranch, FiLock, FiGlobe, FiCheck, FiPlus, FiCode } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiGitBranch, FiLock, FiGlobe, FiCheck, FiPlus, FiX } from 'react-icons/fi';
 
 /**
  * Language indicator color mapper
@@ -23,6 +23,15 @@ const getLanguageColor = (lang) => {
       return 'bg-indigo-400';
     case 'java':
       return 'bg-red-400';
+    case 'c++':
+    case 'cpp':
+      return 'bg-pink-500';
+    case 'c#':
+      return 'bg-purple-400';
+    case 'php':
+      return 'bg-violet-400';
+    case 'ruby':
+      return 'bg-red-500';
     default:
       return 'bg-slate-400';
   }
@@ -30,14 +39,18 @@ const getLanguageColor = (lang) => {
 
 /**
  * RepositoryCard Component
- * Displays repository metadata (name, visibility, language, branch) with a connect action button.
+ * Displays repository metadata (name, visibility, language, branch) with connect/disconnect action button.
  */
 export const RepositoryCard = ({
   repo,
   onConnect,
+  onDisconnect,
   isConnecting = false,
+  isDisconnecting = false,
   isConnected = false,
 }) => {
+  const [isHoveredConnected, setIsHoveredConnected] = useState(false);
+
   const {
     owner,
     repoName,
@@ -47,7 +60,7 @@ export const RepositoryCard = ({
     description,
   } = repo;
 
-  const isPrivate = visibility.toLowerCase() === 'private';
+  const isPrivate = String(visibility).toLowerCase() === 'private';
 
   return (
     <div className="glass-card-linear rounded-2xl border border-white/10 p-5 bg-[#0a0f1d]/80 hover:border-emerald-500/40 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 ease-out flex flex-col justify-between group relative overflow-hidden">
@@ -84,14 +97,18 @@ export const RepositoryCard = ({
         </div>
 
         {/* Optional Description */}
-        {description && (
-          <p className="text-xs text-gray-400 line-clamp-2 mb-4">
+        {description ? (
+          <p className="text-xs text-gray-400 line-clamp-2 mb-4 h-8">
             {description}
+          </p>
+        ) : (
+          <p className="text-xs text-gray-500 italic mb-4 h-8">
+            No description provided.
           </p>
         )}
 
         {/* Meta Attributes: Language & Default Branch */}
-        <div className="flex flex-wrap items-center gap-3 mt-4 text-xs text-gray-300">
+        <div className="flex flex-wrap items-center gap-3 mt-2 text-xs text-gray-300">
           {/* Language Indicator */}
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/5">
             <span
@@ -111,18 +128,57 @@ export const RepositoryCard = ({
       {/* Action Footer */}
       <div className="pt-4 mt-5 border-t border-white/5 flex items-center justify-between">
         <span className="text-[11px] text-gray-400">
-          {isConnected ? 'Status: Active' : 'Ready to scan'}
+          {isConnected ? 'Status: Active' : 'Ready to connect'}
         </span>
 
-        {/* Connect Action Button */}
+        {/* Connect / Disconnect Action Button */}
         {isConnected ? (
           <button
             type="button"
-            disabled
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold select-none cursor-default"
+            onClick={() => onDisconnect && onDisconnect(repo)}
+            onMouseEnter={() => setIsHoveredConnected(true)}
+            onMouseLeave={() => setIsHoveredConnected(false)}
+            disabled={isDisconnecting}
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border text-xs font-semibold transition-all duration-200 cursor-pointer ${
+              isHoveredConnected
+                ? 'bg-rose-500/15 border-rose-500/30 text-rose-300'
+                : 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300'
+            }`}
           >
-            <FiCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Connected</span>
+            {isDisconnecting ? (
+              <>
+                <svg
+                  className="animate-spin h-3.5 w-3.5 text-rose-400"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <span>Disconnecting...</span>
+              </>
+            ) : isHoveredConnected ? (
+              <>
+                <FiX className="w-3.5 h-3.5 text-rose-400" />
+                <span>Disconnect</span>
+              </>
+            ) : (
+              <>
+                <FiCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Connected</span>
+              </>
+            )}
           </button>
         ) : (
           <button

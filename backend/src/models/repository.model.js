@@ -2,45 +2,47 @@ import mongoose from 'mongoose';
 
 const repositorySchema = new mongoose.Schema(
   {
+    githubRepoId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     owner: {
       type: String,
-      required: [true, 'Repository owner is required'],
-      trim: true,
+      required: true,
     },
     repoName: {
       type: String,
-      required: [true, 'Repository name is required'],
-      trim: true,
+      required: true,
     },
-    githubRepoId: {
+    description: {
       type: String,
-      required: [true, 'GitHub repository ID is required'],
-      unique: true,
-      trim: true,
-    },
-    defaultBranch: {
-      type: String,
-      default: 'main',
-      trim: true,
     },
     visibility: {
       type: String,
-      enum: ['public', 'private'],
-      default: 'public',
     },
     language: {
       type: String,
-      default: 'JavaScript',
-      trim: true,
+    },
+    defaultBranch: {
+      type: String,
+    },
+    cloneUrl: {
+      type: String,
+    },
+    htmlUrl: {
+      type: String,
+    },
+    connected: {
+      type: Boolean,
+      default: false,
     },
     connectedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: [true, 'Connected user reference is required'],
     },
     connectedAt: {
       type: Date,
-      default: Date.now,
     },
   },
   {
