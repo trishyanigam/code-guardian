@@ -12,6 +12,7 @@ import RepositoriesPage from '../pages/RepositoriesPage';
 import PullRequestsPage from '../pages/PullRequestsPage';
 import PullRequestDetailsPage from '../pages/PullRequestDetailsPage';
 import ReviewsPage from '../pages/ReviewsPage';
+import ReviewDetailsPage from '../pages/ReviewDetailsPage';
 import AnalyticsPage from '../pages/AnalyticsPage';
 import NotificationsPage from '../pages/NotificationsPage';
 import SettingsPage from '../pages/SettingsPage';
@@ -43,7 +44,9 @@ export const AppRoutes = () => {
           <Route path="/pull-requests" element={<PullRequestsPage />} />
           <Route path="/pull-requests/:id" element={<PullRequestDetailsPage />} />
           <Route path="/ai-reviews" element={<ReviewsPage />} />
+          <Route path="/ai-reviews/:id" element={<ReviewDetailsPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/reviews/:id" element={<ReviewDetailsPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
