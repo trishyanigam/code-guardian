@@ -10,6 +10,7 @@ import DashboardPage from '../pages/DashboardPage';
 import ConnectRepositoryPage from '../pages/ConnectRepositoryPage';
 import RepositoriesPage from '../pages/RepositoriesPage';
 import PullRequestsPage from '../pages/PullRequestsPage';
+import PullRequestDetailsPage from '../pages/PullRequestDetailsPage';
 import ReviewsPage from '../pages/ReviewsPage';
 import AnalyticsPage from '../pages/AnalyticsPage';
 import NotificationsPage from '../pages/NotificationsPage';
@@ -40,6 +41,7 @@ export const AppRoutes = () => {
           <Route path="/repositories" element={<RepositoriesPage />} />
           <Route path="/repositories/connect" element={<ConnectRepositoryPage />} />
           <Route path="/pull-requests" element={<PullRequestsPage />} />
+          <Route path="/pull-requests/:id" element={<PullRequestDetailsPage />} />
           <Route path="/ai-reviews" element={<ReviewsPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />

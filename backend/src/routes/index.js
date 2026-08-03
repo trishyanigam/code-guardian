@@ -3,6 +3,8 @@ import healthRoutes from './health.routes.js';
 import authRoutes from './auth.routes.js';
 import githubRoutes from './github.routes.js';
 import repositoryRoutes from './repository.routes.js';
+import webhookRoutes from './webhook.routes.js';
+import pullRequestRoutes from './pullRequest.routes.js';
 
 const router = Router();
 
@@ -18,4 +20,11 @@ router.use('/github', githubRoutes);
 // Mount repository routes under /repositories
 router.use('/repositories', repositoryRoutes);
 
+// Mount webhook routes under /webhooks
+router.use('/webhooks', webhookRoutes);
+
+// Mount pull request routes under /pull-requests
+router.use('/pull-requests', pullRequestRoutes);
+
 export default router;
+
