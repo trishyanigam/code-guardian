@@ -7,6 +7,7 @@ import webhookRoutes from './webhook.routes.js';
 import pullRequestRoutes from './pullRequest.routes.js';
 import reviewRoutes from './review.routes.js';
 import githubCommentRoutes from './githubComment.routes.js';
+import analyticsRoutes from './analytics.routes.js';
 
 const router = Router();
 
@@ -34,7 +35,11 @@ router.use('/reviews', reviewRoutes);
 // Mount github comment routes under /github-comments
 router.use('/github-comments', githubCommentRoutes);
 
+// Mount analytics routes under /analytics
+router.use('/analytics', analyticsRoutes);
+
 export default router;
+
 
 
 
