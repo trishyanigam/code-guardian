@@ -14,6 +14,7 @@ import PullRequestDetailsPage from '../pages/PullRequestDetailsPage';
 import ReviewsPage from '../pages/ReviewsPage';
 import ReviewDetailsPage from '../pages/ReviewDetailsPage';
 import ReviewHistoryPage from '../pages/ReviewHistoryPage';
+import RulesPage from '../pages/RulesPage';
 import AnalyticsPage from '../pages/AnalyticsPage';
 import NotificationsPage from '../pages/NotificationsPage';
 import SettingsPage from '../pages/SettingsPage';
@@ -49,6 +50,7 @@ export const AppRoutes = () => {
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/reviews/:id" element={<ReviewDetailsPage />} />
           <Route path="/review-history" element={<ReviewHistoryPage />} />
+          <Route path="/rules" element={<RulesPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/settings" element={<SettingsPage />} />

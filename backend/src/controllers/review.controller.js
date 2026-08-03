@@ -40,7 +40,7 @@ export const generateReview = asyncHandler(async (req, res, next) => {
   const changedFiles = await ChangedFile.find({ pullRequest: pullRequest._id });
 
   // 3. Build detailed prompt using prompt.service
-  const prompt = buildReviewPrompt(pullRequest, changedFiles, rules);
+  const prompt = await buildReviewPrompt(pullRequest, changedFiles, rules);
 
   // 4. Call OpenAI API using ai.service
   const rawAiResult = await generateAiResponse(prompt);
